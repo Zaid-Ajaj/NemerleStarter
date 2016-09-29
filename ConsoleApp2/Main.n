@@ -1,0 +1,23 @@
+﻿using System.Console;
+using Arithmetic;
+using Parse;
+
+module Program
+{
+  Main() : void
+  {
+      
+    Write("Enter a number: ");
+    def userInput = ReadLine();
+    
+    // Use of monadic chaining
+    match (Parse.Int(userInput).Bind(Factorial))  
+    { 
+        | Success (value) => WriteLine($"factorial of $userInput was defined = $value");
+        | Failure => WriteLine("Factorial undefined");
+    }
+      
+    Write("Press any key to continue...");
+    ReadKey();    
+  }
+}

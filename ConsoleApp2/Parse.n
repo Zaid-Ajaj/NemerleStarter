@@ -1,0 +1,11 @@
+﻿public module Parse
+{
+    public Int(input: string) : Maybe[int] { 
+        try { 
+            def intResult = int.Parse(input);
+            Maybe[int].Success(intResult);
+        } catch { 
+           | _ => Maybe[int].Failure();
+        }
+    }
+}

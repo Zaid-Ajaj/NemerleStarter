@@ -1,0 +1,35 @@
+﻿using System;
+
+public variant Maybe[T]
+{
+    | Success { value: T }
+    | Failure
+    
+    public Value : T {
+        get {
+            match (this) { 
+                | Success (value) => value;
+                | Failure => throw System.Exception("No value available");
+            }
+        }
+    }
+    
+    // Maybe is also a functor (i.e. it has map)
+    public Map[U](f: T -> U) : Maybe[U] { 
+        match (this) { 
+           | Success (x) => Maybe.Success(f(x));
+           | Failure => Failure();
+        }
+    }
+    
+    public Return(value : T) : Maybe[T] { Maybe[T].Success(value) }
+    
+    // Maybe is a monad (i.e. it has Bind)
+    public Bind[U](binder : T -> Maybe[U]) : Maybe[U] { 
+        match (this) { 
+            | Success (value) => binder(value);
+            | Failure => Failure()
+        } 
+        
+    }
+}
